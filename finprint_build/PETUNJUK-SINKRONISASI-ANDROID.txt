@@ -1,0 +1,64 @@
+FINPRINT PRO — PAKET SINKRONISASI ANDROID + WINDOWS
+===================================================
+
+ISI PAKET
+- app.py: aplikasi Windows Streamlit (tetap menggunakan database finprint_pro.db)
+- api_server.py: API sinkronisasi untuk Android
+- mobile/: antarmuka web mobile/PWA
+- android/: proyek Android Studio (Kotlin WebView) untuk membangun APK
+- Mulai-FinPrint-Pro-Sinkron.bat: menjalankan aplikasi PC dan API bersama-sama
+- Jalankan-Cloudflare-Tunnel.bat: opsi koneksi internet melalui Cloudflare Tunnel
+
+CARA MEMASANG DI PC
+1. Cadangkan dulu file finprint_pro.db milik Anda.
+2. Ekstrak paket ini ke folder aplikasi FinPrint Pro yang sama, jangan menghapus finprint_pro.db.
+3. Jika folder sudah berisi app.py lama, requirements.txt, dan launcher lama, simpan salinan cadangannya.
+4. Jalankan Mulai-FinPrint-Pro-Sinkron.bat.
+5. Izinkan Python pada Windows Firewall untuk jaringan Private. API memakai port TCP 8765.
+6. Tes di browser PC: http://localhost:8765/api/health
+   Hasil yang benar memuat "ok": true.
+
+CARA MENGHUBUNGKAN ANDROID MELALUI WI-FI
+1. Pastikan HP dan PC memakai Wi-Fi/router yang sama.
+2. Di PC buka Command Prompt, ketik: ipconfig
+3. Catat IPv4 Address pada adapter Wi-Fi (contoh 192.168.1.10).
+4. Di Android, buka aplikasi FinPrint Pro, isi alamat server:
+   http://IP-PC-ANDA:8765
+   Contoh: http://192.168.1.10:8765
+5. Login dengan username dan password FinPrint Pro yang sudah digunakan di PC.
+6. Setelah login, data Android langsung disimpan ke finprint_pro.db yang sama.
+
+CARA MENGAKSES DARI LUAR RUMAH / INTERNET
+PENTING: PC harus tetap menyala, terhubung internet, dan API berjalan. Ini memakai PC sebagai server; bukan cloud database mandiri.
+1. Pasang Cloudflare Tunnel (cloudflared) resmi pada PC.
+2. Pastikan Sync API sudah berjalan pada port 8765.
+3. Jalankan Jalankan-Cloudflare-Tunnel.bat.
+4. Cloudflare akan menampilkan alamat HTTPS *.trycloudflare.com. Alamat quick tunnel dapat berubah setiap kali dijalankan.
+5. Di aplikasi Android > Setelan, isi alamat HTTPS itu pada "Server internet".
+6. Pilih "Otomatis" agar aplikasi mencoba alamat lokal lebih dulu lalu alamat internet.
+7. Untuk alamat tetap, buat named Cloudflare Tunnel dan hostname/domain sendiri; quick tunnel hanya untuk uji coba.
+
+MEMBANGUN APK ANDROID
+1. Instal Android Studio versi stabil dan Android SDK Platform 35.
+2. Android Studio > Open > pilih folder android di paket ini.
+3. Tunggu Gradle Sync selesai.
+4. Pilih Build > Build Bundle(s) / APK(s) > Build APK(s).
+5. APK hasil build tersedia di android/app/build/outputs/apk/debug/app-debug.apk.
+6. Pindahkan APK ke HP Android dan instal. Saat instalasi, Android mungkin meminta izin memasang aplikasi dari sumber tersebut.
+
+ALTERNATIF TANPA MEMBANGUN APK
+Di PC buka http://IP-PC-ANDA:8765/mobile untuk tampilan mobile. Untuk PWA yang dapat dipasang penuh melalui Chrome, gunakan hostname HTTPS (Cloudflare Tunnel bernama) lalu buka alamat HTTPS tersebut di Chrome Android dan pilih Install app / Tambahkan ke layar utama.
+
+KEAMANAN & BATASAN
+- Jangan meneruskan port 8765 langsung dari router ke internet. Gunakan HTTPS tunnel.
+- Login memakai akun users yang sudah ada di database FinPrint Pro.
+- Sesi API berlaku 12 jam; login ulang bila sesi habis.
+- Ubah password admin bawaan jika masih memakai admin / finprint123.
+- Quick Tunnel URL dapat berubah dan hanya aktif selama proses cloudflared berjalan.
+- PC harus hidup agar sinkronisasi langsung tersedia. Jika PC mati/offline, aplikasi Android tidak dapat membaca atau menyimpan data ke database PC.
+- Database yang sama digunakan Streamlit dan API; jangan menyalin database aktif ke beberapa PC sekaligus.
+- Paket ini menyediakan proyek Android Studio dan sumber aplikasi; APK belum dikompilasi di sini.
+- Selalu backup finprint_pro.db sebelum mengganti file aplikasi.
+
+CATATAN PENGEMBANGAN
+Paket ini membuat sinkronisasi langsung dua arah melalui satu database SQLite di PC. Android dapat membuat transaksi/pesanan dan membaca dashboard, transaksi, bahan, dan pesanan. Pengaturan master bahan dan biaya default tetap dikelola dari menu Pengaturan pada PC.

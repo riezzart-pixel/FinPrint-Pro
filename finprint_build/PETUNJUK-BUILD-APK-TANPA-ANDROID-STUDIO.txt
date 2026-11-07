@@ -1,0 +1,26 @@
+MEMBUAT APK DEBUG FINPRINT PRO TANPA MEMASANG ANDROID STUDIO
+
+Paket ini menyiapkan proses build APK melalui GitHub Actions (komputer hanya perlu browser).
+APK belum dibuat di dalam ZIP ini. GitHub akan membangunnya di server setelah Anda mengunggah proyek.
+
+LANGKAH:
+1. Buat akun / masuk ke https://github.com
+2. Buat repository baru, misalnya finprint-pro-android. Pilih Private bila ingin proyek tidak publik.
+3. Ekstrak ZIP ini di komputer.
+4. Unggah seluruh isi folder hasil ekstrak ke repository GitHub (termasuk folder tersembunyi .github).
+   Cara mudah: buka repository -> Add file -> Upload files -> seret seluruh isi folder hasil ekstrak.
+5. Buka tab Actions di repository.
+6. Pilih workflow "Build FinPrint Pro Debug APK".
+7. Klik Run workflow -> Run workflow.
+8. Tunggu sampai proses selesai dengan tanda hijau.
+9. Buka hasil workflow yang selesai. Di bagian Artifacts, unduh
+   "FinPrint-Pro-debug-APK". Ekstrak unduhan tersebut untuk memperoleh app-debug.apk.
+10. Kirim app-debug.apk ke HP Android dan buka file tersebut untuk memasang.
+
+CATATAN:
+- Tidak perlu memasang Android Studio di komputer atau HP untuk proses build ini.
+- Build memerlukan koneksi internet dan akun GitHub.
+- APK debug untuk uji coba, bukan rilis Play Store.
+- Jika GitHub menampilkan pesan error, kirim tangkapan layar/log Actions agar dapat diperiksa.
+- Aplikasi Android dalam proyek ini adalah pembungkus WebView yang memuat antarmuka lokal
+  dari android/app/src/main/assets/index.html.

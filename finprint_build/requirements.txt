@@ -1,0 +1,6 @@
+streamlit>=1.32
+pandas>=2.0
+plotly>=5.18
+fpdf2>=2.7
+fastapi>=0.115
+uvicorn[standard]>=0.30

@@ -1,0 +1,27 @@
+FINPRINT PRO — PAKET LENGKAP WINDOWS
+
+FITUR
+- Login admin dan staff.
+- Dashboard pemasukan, pengeluaran, saldo, pesanan, dan grafik arus kas.
+- Pencatatan transaksi dengan tanggal dan jam.
+- Kalkulator untuk bahan cetak, luas, jumlah, tinta, margin, dan harga jual.
+- Checkbox laminasi, potong, packing, dan finishing (aktif/nonaktif per pesanan).
+- Harga bahan, tinta, laminasi, potong, packing, finishing dapat diedit saat kalkulasi.
+- Pengaturan harga default dan master bahan.
+- Daftar pesanan, status pesanan, nota PDF.
+- Laporan keuangan dan pesanan, ekspor CSV.
+- Database SQLite lokal; pembaruan skema otomatis agar dapat memakai database versi lama.
+
+CARA MENJALANKAN
+1. Ekstrak ZIP ke folder biasa, misalnya D:\FINPRINT_PRO.
+2. Pastikan Python 3.10+ sudah terpasang dan opsi "Add Python to PATH" dicentang.
+3. Klik dua kali Mulai-FinPrint-Pro.bat.
+4. Tunggu instalasi paket pertama kali selesai. Browser akan membuka FinPrint Pro.
+5. Login awal: admin / finprint123.
+
+CATATAN
+- Internet diperlukan saat pertama kali memasang library Python. Pemakaian berikutnya dapat dilakukan secara lokal.
+- Data tersimpan di finprint_pro.db dalam folder aplikasi. Jangan hapus file ini.
+- Buat salinan cadangan finprint_pro.db secara berkala.
+- Kalkulator memakai luas total yang dimasukkan pengguna. Untuk bahan per lembar, biaya bahan dihitung dari jumlah x harga per lembar; bahan per m² dihitung dari luas x harga per m².
+- Harga default hanya menjadi nilai awal; harga pada kalkulator dapat diubah untuk pesanan berjalan.
